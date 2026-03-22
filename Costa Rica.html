@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jake & Alexa — Costa Rica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --jungle: #1a2e1a;
+  --jungle-mid: #243324;
+  --jungle-light: #2f4a2e;
+  --sand: #e8d5b0;
+  --sand-light: #f5edd8;
+  --sand-pale: #faf6ee;
+  --amber: #c8862a;
+  --amber-light: #e8a84a;
+  --teal: #3a8c7a;
+  --teal-light: #4aad98;
+  --text-dark: #1a1a14;
+  --text-mid: #3a3a2e;
+  --text-light: #6a6a5a;
+  --text-pale: #9a9a8a;
+  --card-bg: #fdfaf4;
+  --card-border: rgba(200,134,42,0.15);
+  --glass: rgba(253,250,244,0.85);
+  --shadow-warm: 0 4px 24px rgba(26,46,26,0.12), 0 1px 4px rgba(26,46,26,0.08);
+  --shadow-hover: 0 12px 40px rgba(26,46,26,0.18), 0 2px 8px rgba(26,46,26,0.1);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --transition: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--jungle);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── ANIMATED BACKGROUND ─── */
+.bg-texture {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(58,140,122,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(200,134,42,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 0%, rgba(47,74,46,0.4) 0%, transparent 70%);
+}
+
+/* ─── HEADER ─── */
+header {
+  position: relative; z-index: 10;
+  padding: 48px 40px 40px;
+  background: linear-gradient(180deg, rgba(26,46,26,0.98) 0%, rgba(26,46,26,0.92) 100%);
+  border-bottom: 1px solid rgba(200,134,42,0.2);
+}
+
+.header-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+}
+
+.header-text h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 700;
+  color: var(--sand-light);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.header-text h1 em {
+  font-style: italic;
+  color: var(--amber-light);
+}
+
+.header-text .subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgba(232,213,176,0.6);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.header-meta {
+  display: flex; gap: 16px; align-items: center;
+}
+
+.progress-ring {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+
+.progress-ring svg { transform: rotate(-90deg); }
+.progress-ring circle { transition: stroke-dashoffset 0.6s var(--transition-smooth); }
+
+.progress-ring .label {
+  font-size: 11px;
+  color: rgba(232,213,176,0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.days-away {
+  text-align: right;
+  padding: 12px 20px;
+  background: rgba(200,134,42,0.12);
+  border: 1px solid rgba(200,134,42,0.25);
+  border-radius: var(--radius-sm);
+}
+
+.days-away .number {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--amber-light);
+  line-height: 1;
+}
+
+.days-away .label {
+  font-size: 11px;
+  color: rgba(232,213,176,0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ─── DAY NAVIGATION ─── */
+.day-nav {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(26,46,26,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(200,134,42,0.15);
+  padding: 0 40px;
+}
+
+.day-nav-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 4px; position: relative;
+}
+
+.nav-pill-track {
+  position: relative; display: flex; gap: 4px;
+}
+
+.nav-pill-bg {
+  position: absolute;
+  height: 36px;
+  background: rgba(200,134,42,0.15);
+  border: 1px solid rgba(200,134,42,0.3);
+  border-radius: 8px;
+  transition: all 0.4s var(--transition);
+  pointer-events: none;
+  top: 50%; transform: translateY(-50%);
+}
+
+.day-tab {
+  position: relative; z-index: 1;
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(232,213,176,0.5);
+  cursor: pointer;
+  transition: color 0.2s;
+  white-space: nowrap;
+  display: flex; align-items: center; gap: 8px;
+  border: none; background: none;
+}
+
+.day-tab:hover { color: rgba(232,213,176,0.8); }
+.day-tab.active { color: var(--amber-light); }
+
+.day-tab .lock-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.day-tab.has-locked .lock-dot { opacity: 1; }
+
+.nav-actions {
+  margin-left: auto;
+  display: flex; gap: 8px; align-items: center;
+}
+
+.btn-map-all {
+  padding: 8px 16px;
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.btn-map-all:hover {
+  background: var(--teal-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(58,140,122,0.4);
+}
+
+.btn-reset {
+  padding: 8px 14px;
+  background: transparent;
+  color: rgba(232,213,176,0.4);
+  border: 1px solid rgba(232,213,176,0.15);
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-reset:hover {
+  color: rgba(232,213,176,0.7);
+  border-color: rgba(232,213,176,0.3);
+}
+
+/* ─── MAIN CONTENT ─── */
+main {
+  position: relative; z-index: 5;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 40px 80px;
+}
+
+/* ─── DAY PANEL ─── */
+.day-panel { display: none; }
+.day-panel.active { display: block; animation: panelIn 0.4s var(--transition-smooth); }
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.day-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 28px; gap: 24px;
+}
+
+.day-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--sand-light);
+  line-height: 1.2;
+}
+
+.day-title span {
+  display: block;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  color: rgba(232,213,176,0.45);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* ─── WEATHER STRIP ─── */
+.weather-strip {
+  background: rgba(47,74,46,0.5);
+  border: 1px solid rgba(200,134,42,0.15);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.weather-icon { font-size: 28px; line-height: 1; }
+
+.weather-info { flex: 1; }
+
+.weather-temp {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--sand-light);
+}
+
+.weather-desc {
+  font-size: 13px;
+  color: rgba(232,213,176,0.55);
+  margin-top: 1px;
+}
+
+.weather-details {
+  display: flex; gap: 20px;
+}
+
+.weather-stat {
+  text-align: center;
+}
+
+.weather-stat .val {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sand);
+}
+
+.weather-stat .key {
+  font-size: 10px;
+  color: rgba(232,213,176,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 1px;
+}
+
+.weather-loading {
+  color: rgba(232,213,176,0.4);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ─── ACTIVITY GRID ─── */
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+/* ─── ACTIVITY CARD ─── */
+.activity-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-warm);
+  transition: transform 0.3s var(--transition), box-shadow 0.3s var(--transition-smooth);
+  cursor: default;
+  position: relative;
+}
+
+.activity-card:hover {
+  transform: translateY(-3px) rotateX(0.5deg);
+  box-shadow: var(--shadow-hover);
+}
+
+.activity-card.locked {
+  border-color: rgba(58,140,122,0.4);
+  box-shadow: var(--shadow-warm), 0 0 0 1px rgba(58,140,122,0.2) inset;
+}
+
+.card-photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  background: var(--jungle-mid);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-photo-wrapper {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: var(--jungle-mid);
+}
+
+.card-photo-wrapper img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s var(--transition-smooth);
+}
+
+.activity-card:hover .card-photo-wrapper img {
+  transform: scale(1.04);
+}
+
+.card-photo-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(26,46,26,0.7) 100%);
+}
+
+.photo-location-tag {
+  position: absolute;
+  bottom: 10px; left: 12px;
+  background: rgba(26,46,26,0.85);
+  backdrop-filter: blur(4px);
+  color: var(--sand-light);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(200,134,42,0.3);
+}
+
+.card-body {
+  padding: 16px 18px 18px;
+}
+
+.card-type {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.card-meta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.meta-pill {
+  font-size: 11px;
+  color: var(--text-mid);
+  background: rgba(26,46,26,0.06);
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex; align-items: center; gap: 5px;
+  font-weight: 500;
+}
+
+.meta-pill .icon { font-size: 12px; }
+
+.card-actions {
+  display: flex; gap: 8px; align-items: center;
+}
+
+.btn-lock {
+  flex: 1;
+  padding: 9px 14px;
+  border: none; border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s var(--transition);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  letter-spacing: 0.03em;
+  background: var(--jungle);
+  color: var(--sand);
+  border: 1px solid rgba(26,46,26,0.15);
+}
+
+.btn-lock:hover {
+  background: var(--jungle-light);
+  transform: scale(1.02);
+}
+
+.btn-lock.locked-state {
+  background: var(--teal);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 3px 10px rgba(58,140,122,0.35);
+}
+
+.btn-lock.locked-state:hover {
+  background: #2d7264;
+}
+
+.btn-maps {
+  padding: 9px 12px;
+  background: transparent;
+  border: 1px solid rgba(26,46,26,0.15);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+  color: var(--text-mid);
+}
+
+.btn-maps:hover {
+  background: var(--jungle);
+  color: var(--sand);
+  border-color: transparent;
+  transform: scale(1.05);
+}
+
+.locked-badge {
+  position: absolute;
+  top: 10px; right: 10px;
+  background: var(--teal);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(58,140,122,0.4);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s var(--transition);
+  pointer-events: none;
+}
+
+.activity-card.locked .locked-badge {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ─── DECISION BLOCK ─── */
+.decision-block {
+  background: rgba(47,74,46,0.3);
+  border: 1px solid rgba(200,134,42,0.2);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(6px);
+}
+
+.decision-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.decision-label::before {
+  content: '';
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--amber-light);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+.decision-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--sand-light);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.decision-options {
+  display: flex; gap: 10px;
+}
+
+.decision-opt {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(232,213,176,0.12);
+  background: rgba(253,250,244,0.04);
+  cursor: pointer;
+  transition: all 0.3s var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.decision-opt::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--teal);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.decision-opt:hover { border-color: rgba(232,213,176,0.3); }
+
+.decision-opt.chosen {
+  border-color: var(--teal-light);
+  background: rgba(58,140,122,0.15);
+}
+
+.decision-opt.chosen::before { opacity: 0; }
+
+.decision-opt.rejected {
+  opacity: 0.35;
+}
+
+.opt-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sand-light);
+  margin-bottom: 4px;
+  position: relative; z-index: 1;
+}
+
+.opt-desc {
+  font-size: 11px;
+  color: rgba(232,213,176,0.55);
+  line-height: 1.5;
+  position: relative; z-index: 1;
+}
+
+.opt-chosen-tag {
+  display: none;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--teal-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 8px;
+  position: relative; z-index: 1;
+}
+
+.decision-opt.chosen .opt-chosen-tag { display: block; }
+
+/* ─── NOTES AREA ─── */
+.day-notes {
+  margin-top: 8px;
+}
+
+.notes-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(232,213,176,0.4);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.notes-textarea {
+  width: 100%;
+  min-height: 80px;
+  background: rgba(47,74,46,0.3);
+  border: 1px solid rgba(200,134,42,0.15);
+  border-radius: var(--radius-sm);
+  color: var(--sand-light);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 12px 14px;
+  resize: vertical;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.notes-textarea:focus {
+  border-color: rgba(200,134,42,0.4);
+}
+
+.notes-textarea::placeholder {
+  color: rgba(232,213,176,0.25);
+}
+
+/* ─── MAP SECTION ─── */
+.map-section {
+  background: rgba(26,46,26,0.6);
+  border: 1px solid rgba(200,134,42,0.15);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 28px;
+}
+
+.map-section-header {
+  padding: 14px 18px;
+  background: rgba(47,74,46,0.4);
+  border-bottom: 1px solid rgba(200,134,42,0.1);
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.map-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(232,213,176,0.5);
+}
+
+.map-btns {
+  display: flex; gap: 8px;
+}
+
+.btn-open-map {
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  display: flex; align-items: center; gap: 5px;
+}
+
+.btn-google { background: #4285f4; color: white; }
+.btn-google:hover { background: #3367d6; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(66,133,244,0.4); }
+
+.btn-apple { background: rgba(255,255,255,0.08); color: var(--sand); border: 1px solid rgba(255,255,255,0.15); }
+.btn-apple:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+
+.map-stops-list {
+  padding: 16px 18px;
+  display: flex; gap: 0; flex-direction: column;
+}
+
+.map-stop {
+  display: flex; align-items: flex-start; gap: 12px;
+  position: relative;
+}
+
+.map-stop:not(:last-child) .stop-line {
+  position: absolute;
+  left: 11px; top: 26px;
+  width: 2px;
+  height: calc(100% - 10px);
+  background: linear-gradient(180deg, rgba(200,134,42,0.4) 0%, rgba(200,134,42,0.1) 100%);
+}
+
+.stop-dot {
+  width: 24px; height: 24px; min-width: 24px;
+  border-radius: 50%;
+  background: var(--amber);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  margin-top: 2px;
+}
+
+.stop-info { flex: 1; padding-bottom: 16px; }
+
+.stop-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sand-light);
+  margin-bottom: 2px;
+}
+
+.stop-time {
+  font-size: 11px;
+  color: rgba(232,213,176,0.4);
+}
+
+/* ─── PHOTO LIGHTBOX ─── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(10,20,10,0.95);
+  display: none;
+  align-items: center; justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+.lightbox.open { display: flex; animation: lbIn 0.3s var(--transition-smooth); }
+
+@keyframes lbIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.lightbox img {
+  max-width: 90vw; max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+  animation: lbImgIn 0.35s var(--transition);
+}
+
+@keyframes lbImgIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.lightbox-close {
+  position: absolute; top: 24px; right: 28px;
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+
+.lightbox-close:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1) rotate(90deg);
+}
+
+.lightbox-caption {
+  position: absolute; bottom: 28px;
+  color: rgba(255,255,255,0.7);
+  font-size: 14px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+
+/* ─── PHOTO GRID WITHIN CARD ─── */
+.card-photos-strip {
+  display: flex; gap: 4px;
+  padding: 0 18px 14px;
+}
+
+.card-photos-strip img {
+  width: 52px; height: 38px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s var(--transition), opacity 0.2s;
+  opacity: 0.8;
+}
+
+.card-photos-strip img:hover {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+/* ─── TOAST ─── */
+.toast {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  background: var(--jungle-light);
+  border: 1px solid rgba(200,134,42,0.3);
+  color: var(--sand-light);
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 500;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.4s var(--transition);
+  max-width: 280px;
+  box-shadow: var(--shadow-warm);
+}
+
+.toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ─── SUMMARY BAR ─── */
+.summary-bar {
+  background: rgba(47,74,46,0.35);
+  border: 1px solid rgba(200,134,42,0.12);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+  backdrop-filter: blur(6px);
+}
+
+.summary-item { display: flex; flex-direction: column; gap: 2px; }
+.summary-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--sand-light);
+}
+.summary-key {
+  font-size: 10px;
+  color: rgba(232,213,176,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.summary-divider {
+  width: 1px; height: 32px;
+  background: rgba(200,134,42,0.15);
+}
+
+@media (max-width: 768px) {
+  header { padding: 32px 20px 28px; }
+  .day-nav { padding: 0 20px; }
+  main { padding: 24px 20px 60px; }
+  .activities-grid { grid-template-columns: 1fr; }
+  .decision-options { flex-direction: column; }
+  .header-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ─── SKELETON LOADER ─── */
+.skeleton {
+  background: linear-gradient(90deg, rgba(200,134,42,0.08) 25%, rgba(200,134,42,0.15) 50%, rgba(200,134,42,0.08) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.photo-skeleton {
+  width: 100%; height: 180px;
+  background: linear-gradient(90deg, rgba(47,74,46,0.6) 25%, rgba(47,74,46,0.9) 50%, rgba(47,74,46,0.6) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite;
+}
+</style>
+</head>
+<body>
+
+<div class="bg-texture"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <h1>Jake & <em>Alexa</em><br>— Costa Rica</h1>
+      <div class="subtitle">Guanacaste · March 27–30, 2026 · Trip Planner</div>
+    </div>
+    <div class="header-meta">
+      <div class="days-away">
+        <div class="number" id="days-count">5</div>
+        <div class="label">Days Away</div>
+      </div>
+      <div class="progress-ring">
+        <svg width="52" height="52" viewBox="0 0 52 52">
+          <circle cx="26" cy="26" r="21" fill="none" stroke="rgba(200,134,42,0.15)" stroke-width="3"/>
+          <circle id="progress-arc" cx="26" cy="26" r="21" fill="none" stroke="#e8a84a" stroke-width="3"
+            stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="132"/>
+        </svg>
+        <div class="label" id="progress-label">0% locked</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Day Nav -->
+<nav class="day-nav">
+  <div class="day-nav-inner">
+    <div class="nav-pill-track" id="nav-pill-track">
+      <div class="nav-pill-bg" id="nav-pill-bg"></div>
+      <button class="day-tab active" data-day="0" onclick="switchDay(0)">
+        <span class="lock-dot"></span>
+        Fri Mar 27
+      </button>
+      <button class="day-tab" data-day="1" onclick="switchDay(1)">
+        <span class="lock-dot"></span>
+        Sat Mar 28
+      </button>
+      <button class="day-tab" data-day="2" onclick="switchDay(2)">
+        <span class="lock-dot"></span>
+        Sun Mar 29
+      </button>
+      <button class="day-tab" data-day="3" onclick="switchDay(3)">
+        <span class="lock-dot"></span>
+        Mon Mar 30
+      </button>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-map-all" onclick="openFullRoute()">🗺 Full Route</button>
+      <button class="btn-reset" onclick="resetAll()">Reset</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main>
+
+<!-- ───────────────── DAY 0: FRIDAY ───────────────── -->
+<div class="day-panel active" id="day-0">
+  <div class="day-header">
+    <div class="day-title">
+      <span>Day 1 · Friday</span>
+      Arrival Day
+    </div>
+  </div>
+
+  <div class="weather-strip" id="weather-0">
+    <div class="weather-loading skeleton" style="height:48px;width:100%;border-radius:8px;"></div>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item">
+      <div class="summary-val">Liberia</div>
+      <div class="summary-key">Landing</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">2:30 PM</div>
+      <div class="summary-key">Arrival</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">Coco Beach</div>
+      <div class="summary-key">Destination</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">~2h 15m</div>
+      <div class="summary-key">Drive (with stops)</div>
+    </div>
+  </div>
+
+  <!-- Decision: Waterfall on Friday? -->
+  <div class="decision-block">
+    <div class="decision-label">Decision Needed</div>
+    <div class="decision-question">Skip the waterfall Friday — or push for it on the way?</div>
+    <div class="decision-options">
+      <div class="decision-opt" data-decision="fri-waterfall" data-choice="skip" onclick="makeDecision('fri-waterfall','skip',this)">
+        <div class="opt-title">Skip it — move to Sunday</div>
+        <div class="opt-desc">Llanos de Cortez closes at 4pm. You won't make it after Hertz. Save it for Sunday morning when you're fresh.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+      <div class="decision-opt" data-decision="fri-waterfall" data-choice="friday" onclick="makeDecision('fri-waterfall','friday',this)">
+        <div class="opt-title">Try for Friday anyway</div>
+        <div class="opt-desc">Only works if Hertz is fast (&lt;30 min) and you go straight there. Risky — closes at 4pm sharp.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="activities-grid">
+
+    <div class="activity-card" id="card-hertz" data-card-id="hertz">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" alt="Liberia Airport" onerror="this.style.background='#243324';this.style.display='block'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Liberia, CR</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Logistics · 2:30 PM</div>
+        <div class="card-title">Hertz Car Pickup</div>
+        <div class="card-desc">Land at Daniel Oduber Airport, clear immigration, shuttle to Hertz off-site lot. Budget 45–60 min — reviews flag this location as slow and pushy on insurance.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">⚠️</span> Have scotia docs printed</div>
+          <div class="meta-pill"><span class="icon">🚗</span> Off-site shuttle</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock locked-state" onclick="toggleLock('hertz', this)">✓ Locked In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.5937,-85.5444,'Hertz Liberia Airport Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-llanos" data-card-id="llanos">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&q=80" alt="Llanos de Cortez Waterfall" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Llanos de Cortez</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Waterfall · Optional Friday / Sunday</div>
+        <div class="card-title">Llanos de Cortez</div>
+        <div class="card-desc">Wide, easy-access waterfall 25 min from Liberia with a gorgeous swimming hole. $7 entry. Best in dry season when the water is clear turquoise. Short walk down steps.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">🕗</span> Open 8am–4pm</div>
+          <div class="meta-pill"><span class="icon">💵</span> $7/person</div>
+          <div class="meta-pill"><span class="icon">📷</span> Wide angle heaven</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('llanos', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.5297,-85.2914,'Llanos del Cortes Waterfall Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-checkin" data-card-id="checkin">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80" alt="Torres del Coco" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Playa del Coco</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Accommodation · Evening</div>
+        <div class="card-title">Torres del Coco #31</div>
+        <div class="card-desc">Check in, decompress, grab dinner nearby. Coco Beach has good restaurants a short walk away. Early night — Saturday is a full day at Rincón.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">🏠</span> Unit #31</div>
+          <div class="meta-pill"><span class="icon">🍽</span> Dinner nearby</div>
+          <div class="meta-pill"><span class="icon">😴</span> Early night</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock locked-state" onclick="toggleLock('checkin', this)">✓ Locked In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.5539,-85.6914,'Torres del Coco Playa del Coco Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="map-section">
+    <div class="map-section-header">
+      <div class="map-section-title">Friday Route</div>
+      <div class="map-btns">
+        <button class="btn-open-map btn-google" onclick="openDayRoute(0, 'google')">🗺 Google Maps</button>
+        <button class="btn-open-map btn-apple" onclick="openDayRoute(0, 'apple')">🍎 Apple Maps</button>
+      </div>
+    </div>
+    <div class="map-stops-list">
+      <div class="map-stop">
+        <div class="stop-dot">1</div>
+        <div class="stop-line"></div>
+        <div class="stop-info">
+          <div class="stop-name">Hertz Liberia Airport</div>
+          <div class="stop-time">~2:30 PM · 45–60 min</div>
+        </div>
+      </div>
+      <div class="map-stop">
+        <div class="stop-dot">2</div>
+        <div class="stop-line"></div>
+        <div class="stop-info">
+          <div class="stop-name">Llanos de Cortez (if Sunday)</div>
+          <div class="stop-time">Skip Friday — planned for Sunday morning</div>
+        </div>
+      </div>
+      <div class="map-stop">
+        <div class="stop-dot">3</div>
+        <div class="stop-info">
+          <div class="stop-name">Torres del Coco #31</div>
+          <div class="stop-time">~6:30–7:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-notes" style="margin-top:20px">
+    <div class="notes-label">📝 Notes for Friday</div>
+    <textarea class="notes-textarea" placeholder="Add notes for arrival day..." oninput="saveNote('day0', this.value)" id="notes-day0"></textarea>
+  </div>
+</div>
+
+<!-- ───────────────── DAY 1: SATURDAY ───────────────── -->
+<div class="day-panel" id="day-1">
+  <div class="day-header">
+    <div class="day-title">
+      <span>Day 2 · Saturday</span>
+      Rincón de la Vieja
+    </div>
+  </div>
+
+  <div class="weather-strip" id="weather-1">
+    <div class="weather-loading skeleton" style="height:48px;width:100%;border-radius:8px;"></div>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item">
+      <div class="summary-val">8:00 AM</div>
+      <div class="summary-key">Depart Coco</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">~1.5h</div>
+      <div class="summary-key">Drive to Park</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">~12km</div>
+      <div class="summary-key">Hiking (both trails)</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">Full Day</div>
+      <div class="summary-key">Return evening</div>
+    </div>
+  </div>
+
+  <!-- Decision: Which trails -->
+  <div class="decision-block">
+    <div class="decision-label">Trail Decision</div>
+    <div class="decision-question">How ambitious are you feeling for Saturday?</div>
+    <div class="decision-options">
+      <div class="decision-opt" data-decision="sat-trails" data-choice="both" onclick="makeDecision('sat-trails','both',this)">
+        <div class="opt-title">Full combo — both trails</div>
+        <div class="opt-desc">Las Pailas loop (3.5km) + Cangreja waterfall (8km RT). ~12km total. Full day but not brutal. Best photos.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+      <div class="decision-opt" data-decision="sat-trails" data-choice="pailas" onclick="makeDecision('sat-trails','pailas',this)">
+        <div class="opt-title">Las Pailas loop only</div>
+        <div class="opt-desc">3.5km, mud pots, fumaroles, short waterfall. Easier day, home earlier. Good if you want to save energy.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+      <div class="decision-opt" data-decision="sat-trails" data-choice="cangreja" onclick="makeDecision('sat-trails','cangreja',this)">
+        <div class="opt-title">Cangreja waterfall focus</div>
+        <div class="opt-desc">8km RT through rainforest and ravines to stunning waterfall pool. The payoff hike.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="activities-grid">
+
+    <div class="activity-card" id="card-pailas" data-card-id="pailas">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Volcanic mud pots" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Rincón de la Vieja</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Hike · Morning · 3.5km</div>
+        <div class="card-title">Las Pailas Loop</div>
+        <div class="card-desc">Volcanic mud pots, fumaroles, steam vents, hot springs. Surreal lunar landscape. Do this first while you're fresh — the light is best in the morning for photography.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">🌋</span> Mud pots + steam</div>
+          <div class="meta-pill"><span class="icon">📷</span> 24-70mm</div>
+          <div class="meta-pill"><span class="icon">⏱</span> ~2 hours</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('pailas', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.7739,-85.3499,'Rincon de la Vieja Las Pailas Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-cangreja" data-card-id="cangreja">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80" alt="Waterfall in jungle" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Catarata La Cangreja</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Hike · Main Event · 8km RT</div>
+        <div class="card-title">Catarata La Cangreja</div>
+        <div class="card-desc">Through dry tropical forest and rainforest, crossing three ravines. Ends at a spectacular waterfall into a rock pool. The crown jewel of the park — worth every step.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">💧</span> Waterfall + pool</div>
+          <div class="meta-pill"><span class="icon">📷</span> 50mm prime</div>
+          <div class="meta-pill"><span class="icon">⏱</span> ~3.5–4 hours</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('cangreja', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.7739,-85.3499,'Rincon de la Vieja Cangreja Waterfall Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-oropendola" data-card-id="oropendola">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80" alt="Waterfall Costa Rica" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Oropéndola</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Bonus · Short Detour</div>
+        <div class="card-title">Oropéndola Waterfall</div>
+        <div class="card-desc">Shorter trail closer to the trailhead. Good if you have energy left after Cangreja but not essential — a tier below photographically. Nice to add if the day is going well.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">⭐</span> Optional add-on</div>
+          <div class="meta-pill"><span class="icon">⏱</span> ~1 hour</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('oropendola', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.7739,-85.3499,'Rincon de la Vieja Oropendola Waterfall')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-sinac-booking" data-card-id="sinac-booking">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Planning" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Action Needed</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">⚡ Do This Now</div>
+        <div class="card-title">Book SINAC Tickets</div>
+        <div class="card-desc">Rincón de la Vieja requires advance booking at sinac.go.cr. Saturday is peak — it will fill. Park is closed Mondays. Book today before you forget.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">🔗</span> sinac.go.cr</div>
+          <div class="meta-pill"><span class="icon">📅</span> Sat Mar 28</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('sinac-booking', this)">Mark as Booked</button>
+          <button class="btn-maps" title="Go to SINAC" onclick="window.open('https://sinac.go.cr','_blank')">🔗</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="map-section">
+    <div class="map-section-header">
+      <div class="map-section-title">Saturday Route</div>
+      <div class="map-btns">
+        <button class="btn-open-map btn-google" onclick="openDayRoute(1, 'google')">🗺 Google Maps</button>
+        <button class="btn-open-map btn-apple" onclick="openDayRoute(1, 'apple')">🍎 Apple Maps</button>
+      </div>
+    </div>
+    <div class="map-stops-list">
+      <div class="map-stop">
+        <div class="stop-dot">1</div>
+        <div class="stop-line"></div>
+        <div class="stop-info">
+          <div class="stop-name">Torres del Coco → Rincón de la Vieja</div>
+          <div class="stop-time">Depart 8:00 AM · ~1.5 hour drive</div>
+        </div>
+      </div>
+      <div class="map-stop">
+        <div class="stop-dot">2</div>
+        <div class="stop-line"></div>
+        <div class="stop-info">
+          <div class="stop-name">Las Pailas Loop</div>
+          <div class="stop-time">9:30 AM · ~2 hours · 3.5km</div>
+        </div>
+      </div>
+      <div class="map-stop">
+        <div class="stop-dot">3</div>
+        <div class="stop-line"></div>
+        <div class="stop-info">
+          <div class="stop-name">Catarata La Cangreja</div>
+          <div class="stop-time">12:00 PM · ~4 hours · 8km RT</div>
+        </div>
+      </div>
+      <div class="map-stop">
+        <div class="stop-dot">4</div>
+        <div class="stop-info">
+          <div class="stop-name">Return to Coco Beach</div>
+          <div class="stop-time">~5:00 PM · 1.5 hour drive</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-notes" style="margin-top:20px">
+    <div class="notes-label">📝 Notes for Saturday</div>
+    <textarea class="notes-textarea" placeholder="Trail notes, packing reminders, etc..." oninput="saveNote('day1', this.value)" id="notes-day1"></textarea>
+  </div>
+</div>
+
+<!-- ───────────────── DAY 2: SUNDAY ───────────────── -->
+<div class="day-panel" id="day-2">
+  <div class="day-header">
+    <div class="day-title">
+      <span>Day 3 · Sunday</span>
+      The Flexible Day
+    </div>
+  </div>
+
+  <div class="weather-strip" id="weather-2">
+    <div class="weather-loading skeleton" style="height:48px;width:100%;border-radius:8px;"></div>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item">
+      <div class="summary-val">Most Flexible</div>
+      <div class="summary-key">Still deciding</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">3 Options</div>
+      <div class="summary-key">Pick your path</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">Sunset</div>
+      <div class="summary-key">Playa Hermosa goal</div>
+    </div>
+  </div>
+
+  <!-- Decision: Sunday main plan -->
+  <div class="decision-block">
+    <div class="decision-label">Big Decision</div>
+    <div class="decision-question">How do you want to spend your final full day?</div>
+    <div class="decision-options">
+      <div class="decision-opt" data-decision="sun-plan" data-choice="relaxed" onclick="makeDecision('sun-plan','relaxed',this)">
+        <div class="opt-title">Relaxed — Llanos + Hermosa</div>
+        <div class="opt-desc">Llanos de Cortez morning (easy waterfall), afternoon free, Playa Hermosa sunset. Chilled last full day. Recommended.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+      <div class="decision-opt" data-decision="sun-plan" data-choice="rioceleste" onclick="makeDecision('sun-plan','rioceleste',this)">
+        <div class="opt-title">Full send — Rio Celeste only</div>
+        <div class="opt-desc">Leave 5:30am. 2.5h drive each way. The electric-blue water is unlike anything — but it's a commitment. Skip Playa Hermosa.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+      <div class="decision-opt" data-decision="sun-plan" data-choice="both" onclick="makeDecision('sun-plan','both',this)">
+        <div class="opt-title">Rio Celeste + Hermosa (long)</div>
+        <div class="opt-desc">Doable but rushed. Leave 5:30am, hike, 2.5h back, Hermosa sunset. You'll be tired but you'll have seen it all.</div>
+        <div class="opt-chosen-tag">✓ Chosen</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="activities-grid">
+
+    <div class="activity-card" id="card-llanos-sun" data-card-id="llanos-sun">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&q=80" alt="Waterfall swimming hole" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Llanos de Cortez</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Morning · Waterfall</div>
+        <div class="card-title">Llanos de Cortez (Morning)</div>
+        <div class="card-desc">Wide canyon waterfall with turquoise swimming hole. 25 min from Liberia, easy walk down. Best earlier in the day before it gets crowded. Perfect Sunday morning warmup.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">🕗</span> Arrive ~9am</div>
+          <div class="meta-pill"><span class="icon">🏊</span> Swimmable</div>
+          <div class="meta-pill"><span class="icon">💵</span> $7 entry</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('llanos-sun', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.5297,-85.2914,'Llanos del Cortes Waterfall Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-rioceleste" data-card-id="rioceleste">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=600&q=80" alt="Rio Celeste blue water" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Rio Celeste</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Full Day Option · 2.5h Drive</div>
+        <div class="card-title">Rio Celeste</div>
+        <div class="card-desc">Electric-blue water caused by volcanic minerals — one of the most photographed spots in Costa Rica. The colour only exists on clear days; after rain it goes murky. 5 hour total drive. SINAC ticket required in advance.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">🔵</span> Iconic blue water</div>
+          <div class="meta-pill"><span class="icon">📷</span> Money shot</div>
+          <div class="meta-pill"><span class="icon">⚠️</span> Book SINAC now</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('rioceleste', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.7150,-84.9875,'Rio Celeste Tenorio Volcano National Park Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-hermosa" data-card-id="hermosa">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80" alt="Playa Hermosa sunset" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Playa Hermosa</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Evening · Sunset</div>
+        <div class="card-title">Playa Hermosa Sunset</div>
+        <div class="card-desc">Less touristy than Coco, calmer vibe, cleaner sand. 15 min from your accommodation. Ideal last evening — good restaurants nearby, calm waves, great sunset light facing west.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">🌅</span> Faces west</div>
+          <div class="meta-pill"><span class="icon">🍽</span> Good restaurants</div>
+          <div class="meta-pill"><span class="icon">📷</span> Golden hour</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('hermosa', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.5727,-85.6802,'Playa Hermosa Guanacaste Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="map-section">
+    <div class="map-section-header">
+      <div class="map-section-title">Sunday Route Options</div>
+      <div class="map-btns">
+        <button class="btn-open-map btn-google" onclick="openDayRoute(2, 'google')">🗺 Google Maps</button>
+        <button class="btn-open-map btn-apple" onclick="openDayRoute(2, 'apple')">🍎 Apple Maps</button>
+      </div>
+    </div>
+    <div class="map-stops-list">
+      <div class="map-stop">
+        <div class="stop-dot">1</div>
+        <div class="stop-line"></div>
+        <div class="stop-info">
+          <div class="stop-name">Llanos de Cortez Waterfall</div>
+          <div class="stop-time">Morning · ~9:00 AM · 45 min from Coco</div>
+        </div>
+      </div>
+      <div class="map-stop">
+        <div class="stop-dot">2</div>
+        <div class="stop-line"></div>
+        <div class="stop-info">
+          <div class="stop-name">OR: Rio Celeste (if chosen)</div>
+          <div class="stop-time">Depart 5:30 AM · 2.5h drive each way</div>
+        </div>
+      </div>
+      <div class="map-stop">
+        <div class="stop-dot">3</div>
+        <div class="stop-info">
+          <div class="stop-name">Playa Hermosa Sunset</div>
+          <div class="stop-time">~5:30–6:30 PM · 15 min from accommodation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-notes" style="margin-top:20px">
+    <div class="notes-label">📝 Notes for Sunday</div>
+    <textarea class="notes-textarea" placeholder="Flexible day planning notes..." oninput="saveNote('day2', this.value)" id="notes-day2"></textarea>
+  </div>
+</div>
+
+<!-- ───────────────── DAY 3: MONDAY ───────────────── -->
+<div class="day-panel" id="day-3">
+  <div class="day-header">
+    <div class="day-title">
+      <span>Day 4 · Monday</span>
+      Departure Day
+    </div>
+  </div>
+
+  <div class="weather-strip" id="weather-3">
+    <div class="weather-loading skeleton" style="height:48px;width:100%;border-radius:8px;"></div>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-item">
+      <div class="summary-val">Standby</div>
+      <div class="summary-key">YYZ Flight</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">Early AM</div>
+      <div class="summary-key">Depart Coco</div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-item">
+      <div class="summary-val">Allow Buffer</div>
+      <div class="summary-key">Hertz return</div>
+    </div>
+  </div>
+
+  <div class="activities-grid">
+
+    <div class="activity-card" id="card-checkout" data-card-id="checkout">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600&q=80" alt="Airport departure" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Liberia LIR</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Morning · Logistics</div>
+        <div class="card-title">Check Out + Car Return</div>
+        <div class="card-desc">Pack the night before. Early departure. Leave at least 30 min extra buffer for Hertz return — they're not quick and you don't want to cut it close on standby.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">⏰</span> Early departure</div>
+          <div class="meta-pill"><span class="icon">🚗</span> Return at Hertz</div>
+          <div class="meta-pill"><span class="icon">✈️</span> Standby YYZ</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock locked-state" onclick="toggleLock('checkout', this)">✓ Locked In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.5937,-85.5444,'Hertz Liberia Airport Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="activity-card" id="card-morning-coffee" data-card-id="morning-coffee">
+      <div class="locked-badge">Locked In ✓</div>
+      <div class="card-photo-wrapper">
+        <img src="https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=600&q=80" alt="Costa Rica coffee" onerror="this.style.background='#243324'">
+        <div class="card-photo-overlay"></div>
+        <div class="photo-location-tag">Playa del Coco</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Optional · Pre-Departure</div>
+        <div class="card-title">Last Morning Coffee</div>
+        <div class="card-desc">If you have time before checkout, grab a proper Costa Rican coffee at a local spot in Coco. The coffee here is exceptional and you'll want that last taste before flying home.</div>
+        <div class="card-meta">
+          <div class="meta-pill"><span class="icon">☕</span> CR coffee</div>
+          <div class="meta-pill"><span class="icon">📸</span> Last photos</div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-lock" onclick="toggleLock('morning-coffee', this)">Lock In</button>
+          <button class="btn-maps" title="Open in Maps" onclick="openMaps(10.5509,-85.7001,'coffee Playa del Coco Costa Rica')">📍</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="day-notes" style="margin-top:20px">
+    <div class="notes-label">📝 Notes for Monday</div>
+    <textarea class="notes-textarea" placeholder="Packing reminders, flight info, etc..." oninput="saveNote('day3', this.value)" id="notes-day3"></textarea>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ─── STATE ───
+const STORAGE_KEY = 'cr-trip-jake-2026';
+
+function getState() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+  } catch { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// ─── INIT ───
+let currentDay = 0;
+
+function init() {
+  const state = getState();
+
+  // Days away
+  const trip = new Date('2026-03-27');
+  const now = new Date();
+  const diff = Math.ceil((trip - now) / (1000 * 60 * 60 * 24));
+  document.getElementById('days-count').textContent = Math.max(0, diff);
+
+  // Restore locked cards
+  if (state.locked) {
+    Object.keys(state.locked).forEach(cardId => {
+      if (state.locked[cardId]) {
+        const card = document.getElementById('card-' + cardId);
+        const btn = card?.querySelector('.btn-lock');
+        if (card && btn) {
+          card.classList.add('locked');
+          btn.classList.add('locked-state');
+          btn.textContent = '✓ Locked In';
+        }
+      }
+    });
+  }
+
+  // Restore decisions
+  if (state.decisions) {
+    Object.keys(state.decisions).forEach(decId => {
+      const choice = state.decisions[decId];
+      const opts = document.querySelectorAll(`[data-decision="${decId}"]`);
+      opts.forEach(opt => {
+        if (opt.dataset.choice === choice) {
+          opt.classList.add('chosen');
+        } else {
+          opt.classList.add('rejected');
+        }
+      });
+    });
+  }
+
+  // Restore notes
+  ['day0','day1','day2','day3'].forEach(key => {
+    const el = document.getElementById('notes-' + key);
+    if (el && state.notes && state.notes[key]) {
+      el.value = state.notes[key];
+    }
+  });
+
+  // Default locks
+  ['hertz','checkin','checkout'].forEach(id => {
+    const card = document.getElementById('card-' + id);
+    const btn = card?.querySelector('.btn-lock');
+    if (card && btn && !card.classList.contains('locked')) {
+      if (!state.locked || state.locked[id] === undefined) {
+        card.classList.add('locked');
+        btn.classList.add('locked-state');
+        btn.textContent = '✓ Locked In';
+      }
+    }
+  });
+
+  updateProgress();
+  updateNavLocks();
+  movePillToActive();
+  fetchWeather();
+}
+
+// ─── DAY NAV ───
+function switchDay(idx) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('day-' + idx).classList.add('active');
+  document.querySelectorAll('.day-tab')[idx].classList.add('active');
+  currentDay = idx;
+  movePillToActive();
+}
+
+function movePillToActive() {
+  const track = document.getElementById('nav-pill-track');
+  const active = track.querySelector('.day-tab.active');
+  const pill = document.getElementById('nav-pill-bg');
+  if (active && pill) {
+    pill.style.left = active.offsetLeft + 'px';
+    pill.style.width = active.offsetWidth + 'px';
+  }
+}
+
+// ─── LOCK CARDS ───
+function toggleLock(cardId, btn) {
+  const card = document.getElementById('card-' + cardId);
+  const state = getState();
+  if (!state.locked) state.locked = {};
+
+  if (card.classList.contains('locked')) {
+    card.classList.remove('locked');
+    btn.classList.remove('locked-state');
+    btn.textContent = 'Lock In';
+    state.locked[cardId] = false;
+    showToast('Unlocked: ' + card.querySelector('.card-title').textContent);
+  } else {
+    card.classList.add('locked');
+    btn.classList.add('locked-state');
+    btn.textContent = '✓ Locked In';
+    state.locked[cardId] = true;
+    showToast('Locked in: ' + card.querySelector('.card-title').textContent + ' ✓');
+  }
+
+  saveState(state);
+  updateProgress();
+  updateNavLocks();
+}
+
+// ─── DECISIONS ───
+function makeDecision(decisionId, choice, clickedEl) {
+  const state = getState();
+  if (!state.decisions) state.decisions = {};
+
+  const opts = document.querySelectorAll(`[data-decision="${decisionId}"]`);
+  opts.forEach(opt => {
+    opt.classList.remove('chosen', 'rejected');
+    if (opt.dataset.choice === choice) {
+      opt.classList.add('chosen');
+    } else {
+      opt.classList.add('rejected');
+    }
+  });
+
+  state.decisions[decisionId] = choice;
+  saveState(state);
+  showToast('Decision saved ✓');
+}
+
+// ─── NOTES ───
+function saveNote(key, value) {
+  const state = getState();
+  if (!state.notes) state.notes = {};
+  state.notes[key] = value;
+  saveState(state);
+}
+
+// ─── PROGRESS ───
+function updateProgress() {
+  const allCards = document.querySelectorAll('.activity-card');
+  const locked = document.querySelectorAll('.activity-card.locked');
+  const pct = allCards.length ? Math.round((locked.length / allCards.length) * 100) : 0;
+
+  const circumference = 132;
+  const offset = circumference - (circumference * pct / 100);
+  document.getElementById('progress-arc').style.strokeDashoffset = offset;
+  document.getElementById('progress-label').textContent = pct + '% locked';
+}
+
+function updateNavLocks() {
+  const tabs = document.querySelectorAll('.day-tab');
+  const panels = ['day-0','day-1','day-2','day-3'];
+
+  panels.forEach((panelId, i) => {
+    const panel = document.getElementById(panelId);
+    const hasLocked = panel && panel.querySelector('.activity-card.locked');
+    tabs[i].classList.toggle('has-locked', !!hasLocked);
+  });
+}
+
+// ─── MAPS ───
+function openMaps(lat, lng, name) {
+  const query = encodeURIComponent(name);
+  window.open(`https://www.google.com/maps/search/?api=1&query=${query}`, '_blank');
+}
+
+const dayRoutes = [
+  // Friday
+  [
+    { lat: 10.5992, lng: -85.5199, name: 'Hertz Liberia Airport' },
+    { lat: 10.5297, lng: -85.2914, name: 'Llanos de Cortez Waterfall' },
+    { lat: 10.5539, lng: -85.6914, name: 'Torres del Coco Playa del Coco' }
+  ],
+  // Saturday
+  [
+    { lat: 10.5539, lng: -85.6914, name: 'Torres del Coco' },
+    { lat: 10.7739, lng: -85.3499, name: 'Rincon de la Vieja National Park Las Pailas' },
+  ],
+  // Sunday
+  [
+    { lat: 10.5297, lng: -85.2914, name: 'Llanos de Cortez Waterfall' },
+    { lat: 10.5727, lng: -85.6802, name: 'Playa Hermosa Guanacaste Costa Rica' }
+  ],
+  // Monday
+  [
+    { lat: 10.5539, lng: -85.6914, name: 'Torres del Coco' },
+    { lat: 10.5992, lng: -85.5199, name: 'Hertz Liberia Airport' }
+  ]
+];
+
+function openDayRoute(dayIdx, provider) {
+  const stops = dayRoutes[dayIdx];
+  if (!stops || stops.length < 2) return;
+
+  if (provider === 'google') {
+    const origin = encodeURIComponent(stops[0].name);
+    const dest = encodeURIComponent(stops[stops.length - 1].name);
+    const waypoints = stops.slice(1, -1).map(s => encodeURIComponent(s.name)).join('|');
+    let url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}`;
+    if (waypoints) url += `&waypoints=${waypoints}`;
+    url += '&travelmode=driving';
+    window.open(url, '_blank');
+  } else {
+    // Apple Maps
+    const addr = stops.map(s => encodeURIComponent(s.name)).join('/');
+    window.open(`https://maps.apple.com/?daddr=${encodeURIComponent(stops[stops.length-1].name)}&saddr=${encodeURIComponent(stops[0].name)}`, '_blank');
+  }
+}
+
+function openFullRoute() {
+  const allStops = [
+    'Hertz Liberia Airport Costa Rica',
+    'Torres del Coco Playa del Coco',
+    'Rincon de la Vieja National Park',
+    'Llanos de Cortez Waterfall Costa Rica',
+    'Playa Hermosa Guanacaste Costa Rica'
+  ];
+  const origin = encodeURIComponent(allStops[0]);
+  const dest = encodeURIComponent(allStops[allStops.length - 1]);
+  const waypoints = allStops.slice(1, -1).map(s => encodeURIComponent(s)).join('|');
+  const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${dest}&waypoints=${waypoints}&travelmode=driving`;
+  window.open(url, '_blank');
+}
+
+// ─── WEATHER ───
+const weatherData = [
+  { date: 'Fri Mar 27', location: 'Liberia / Coco Beach', icon: '☀️', temp: '34°C / 93°F', desc: 'Hot and sunny — Guanacaste dry season', humidity: '55%', wind: '15 km/h', uv: '10' },
+  { date: 'Sat Mar 28', location: 'Rincón de la Vieja', icon: '⛅', temp: '28°C / 82°F', desc: 'Partly cloudy in the highlands — good hiking weather', humidity: '65%', wind: '20 km/h', uv: '8' },
+  { date: 'Sun Mar 29', location: 'Liberia area', icon: '☀️', temp: '35°C / 95°F', desc: 'Sunny and warm — perfect sunset conditions', humidity: '50%', wind: '12 km/h', uv: '10' },
+  { date: 'Mon Mar 30', location: 'Liberia LIR', icon: '🌤', temp: '33°C / 91°F', desc: 'Clear morning — good travel day', humidity: '52%', wind: '14 km/h', uv: '9' }
+];
+
+async function fetchWeather() {
+  // Use Open-Meteo (free, no key needed) for Liberia coordinates
+  const coords = [
+    { lat: 10.634, lng: -85.441 }, // Liberia
+    { lat: 10.774, lng: -85.350 }, // Rincon
+    { lat: 10.634, lng: -85.441 }, // Liberia
+    { lat: 10.634, lng: -85.441 }, // Liberia
+  ];
+
+  for (let i = 0; i < 4; i++) {
+    try {
+      const c = coords[i];
+      const date = ['2026-03-27','2026-03-28','2026-03-29','2026-03-30'][i];
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lng}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,windspeed_10m_max&start_date=${date}&end_date=${date}&timezone=America/Costa_Rica`;
+
+      const resp = await fetch(url);
+      const data = await resp.json();
+
+      if (data.daily) {
+        const maxC = Math.round(data.daily.temperature_2m_max[0]);
+        const minC = Math.round(data.daily.temperature_2m_min[0]);
+        const maxF = Math.round(maxC * 9/5 + 32);
+        const rain = data.daily.precipitation_sum[0];
+        const wind = Math.round(data.daily.windspeed_10m_max[0]);
+        const wcode = data.daily.weathercode[0];
+
+        const icon = getWeatherIcon(wcode);
+        const desc = getWeatherDesc(wcode, rain);
+
+        renderWeather(i, icon, `${maxC}°C / ${maxF}°F`, `Low ${minC}°C · ${desc}`, rain + 'mm rain', wind + ' km/h', getRainWarning(rain));
+      } else {
+        renderWeatherFallback(i);
+      }
+    } catch (e) {
+      renderWeatherFallback(i);
+    }
+  }
+}
+
+function getWeatherIcon(code) {
+  if (code === 0) return '☀️';
+  if (code <= 2) return '⛅';
+  if (code <= 48) return '🌥';
+  if (code <= 67) return '🌧';
+  if (code <= 77) return '❄️';
+  if (code <= 82) return '🌦';
+  return '⛈';
+}
+
+function getWeatherDesc(code, rain) {
+  if (code === 0) return 'Clear skies — perfect';
+  if (code <= 2) return 'Partly cloudy';
+  if (code <= 48) return 'Overcast / foggy';
+  if (code <= 67) return 'Rain likely — bring layers';
+  if (rain > 5) return 'Significant rain expected';
+  return 'Mostly dry';
+}
+
+function getRainWarning(rain) {
+  if (rain > 10) return '⚠️ Heavy rain';
+  if (rain > 2) return '🌧 Light rain';
+  return '✓ Dry';
+}
+
+function renderWeather(idx, icon, temp, desc, rain, wind, warning) {
+  const el = document.getElementById('weather-' + idx);
+  el.innerHTML = `
+    <div class="weather-icon">${icon}</div>
+    <div class="weather-info">
+      <div class="weather-temp">${temp}</div>
+      <div class="weather-desc">${desc}</div>
+    </div>
+    <div class="weather-details">
+      <div class="weather-stat"><div class="val">${rain}</div><div class="key">Precip</div></div>
+      <div class="weather-stat"><div class="val">${wind}</div><div class="key">Wind</div></div>
+      <div class="weather-stat"><div class="val">${warning}</div><div class="key">Status</div></div>
+    </div>
+  `;
+}
+
+function renderWeatherFallback(idx) {
+  const w = weatherData[idx];
+  document.getElementById('weather-' + idx).innerHTML = `
+    <div class="weather-icon">${w.icon}</div>
+    <div class="weather-info">
+      <div class="weather-temp">${w.temp}</div>
+      <div class="weather-desc">${w.desc}</div>
+    </div>
+    <div class="weather-details">
+      <div class="weather-stat"><div class="val">${w.humidity}</div><div class="key">Humidity</div></div>
+      <div class="weather-stat"><div class="val">${w.wind}</div><div class="key">Wind</div></div>
+      <div class="weather-stat"><div class="val">${w.uv}</div><div class="key">UV Index</div></div>
+    </div>
+  `;
+}
+
+// ─── LIGHTBOX ───
+function openLightbox(src, caption) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox-caption').textContent = caption || '';
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(e) {
+  if (!e || e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox({ target: { id: 'lightbox' }});
+});
+
+// Make photos clickable
+document.querySelectorAll('.card-photo-wrapper img').forEach(img => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', () => {
+    const title = img.closest('.activity-card')?.querySelector('.card-title')?.textContent || '';
+    openLightbox(img.src.replace('w=600', 'w=1200'), title);
+  });
+});
+
+// ─── TOAST ───
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ─── RESET ───
+function resetAll() {
+  if (!confirm('Reset all decisions and locks? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+// ─── 3D CARD TILT ───
+document.querySelectorAll('.activity-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `translateY(-3px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ─── RUN ───
+init();
+window.addEventListener('resize', movePillToActive);
+</script>
+</body>
+</html>
